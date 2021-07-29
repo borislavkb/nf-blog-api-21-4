@@ -29,6 +29,17 @@ app.get("/", (req, res) => {
   We have to start the server. We make it listen on the port 4000
 
 */
-app.listen(4000, () => {
-  console.log("Listening on http://localhost:4000");
-});
+mongoose
+  .connect("mongodb://localhost:27017/articles-api", {
+    useUnifiedTopology: true,
+    useNewUrlParser: true,
+  })
+  .then(() => {
+    console.log("Connected to mongo");
+    app.listen(4000, () => {
+      console.log("Listening on http://localhost:4000");
+    });
+  })
+  .catch((error) => {
+    console.error(error);
+  });
